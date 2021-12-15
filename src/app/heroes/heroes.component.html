@@ -8,3 +8,13 @@
     </a>
   </li>
 </ul>
+
+<div>
+  <label for="new-hero">Hero Name:</label>
+  <input id="new-hero" #heroName />
+
+  <!-- (click) passes the input value to add(), then clears the field -->
+  <button class="add-button" (click)="add(heroName.value); heroName.value = ''">
+    Add Hero
+  </button>
+</div>
