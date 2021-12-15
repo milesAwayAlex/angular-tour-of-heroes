@@ -22,6 +22,10 @@ export class HeroService {
   // URL to web api goes here
   private heroesURL = 'api/heroes';
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
   /**
    * Handle HTTP failure, let the app continue
    * @param operation - name of the failed operation
@@ -51,6 +55,14 @@ export class HeroService {
     return this.http.get<Hero>(url).pipe(
       tap(() => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
+    );
+  }
+
+  // update the hero on the server
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesURL, hero, this.httpOptions).pipe(
+      tap(() => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
     );
   }
 }
